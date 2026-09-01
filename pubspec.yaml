@@ -45,8 +45,9 @@ dependencies:
   # Skeleton loaders.
   shimmer: 3.0.0
 
-  # Auto-gen l10n (flutter_localizations pins intl 0.20.2).
-  intl: 0.20.2
+  # Auto-gen l10n (compatible with both local Flutter 3.44 pin 0.20.2 and
+  # CI's newer flutter_localizations which wants ^0.20.3).
+  intl: ">=0.20.2 <0.21.0"
 
 dev_dependencies:
   flutter_test:
