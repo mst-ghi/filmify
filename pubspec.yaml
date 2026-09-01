@@ -1,0 +1,82 @@
+name: filmify
+description: "Filmify — bilingual movie discovery & download hub."
+publish_to: 'none'
+
+# Source of truth for releases: GitHub Actions release.yml verifies the
+# pushed v* tag matches this value before building artifacts.
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State: hand-rolled ChangeNotifier stores (no provider package needed).
+  # Storage: sembast — pure-Dart file DB (works on Android/Linux/Windows
+  # without native sqlite builds; offline pub cache constraint).
+  sembast: 3.8.9+1
+  path: 1.9.1
+  path_provider: 2.1.6
+
+  # Network.
+  http: 1.6.0
+
+  # Settings persistence.
+  shared_preferences: 2.5.5
+
+  # Images: cached_network_image wired to a JsonCacheInfoRepository-backed
+  # CacheManager (file-based metadata, no sqflite — desktop-safe).
+  cached_network_image: 3.4.1
+  flutter_cache_manager: 3.4.2
+
+  # Opening links in external apps / download managers.
+  url_launcher: 6.3.2
+
+  # Share links via OS share sheet (mobile) / clipboard fallback.
+  share_plus: 11.1.0
+
+  # "About" page version display.
+  package_info_plus: 8.3.1
+
+  # Skeleton loaders.
+  shimmer: 3.0.0
+
+  # Auto-gen l10n (flutter_localizations pins intl 0.20.2).
+  intl: 0.20.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^6.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/fonts/
+
+  fonts:
+    - family: Vazirmatn
+      fonts:
+        - asset: assets/fonts/Vazirmatn-Regular.ttf
+        - asset: assets/fonts/Vazirmatn-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Vazirmatn-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Vazirmatn-Bold.ttf
+          weight: 700

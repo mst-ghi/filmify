@@ -1,0 +1,91 @@
+{
+  "@@locale": "en",
+  "appName": "Filmify",
+  "navHome": "Home",
+  "navSearch": "Search",
+  "navFavorites": "Favorites",
+  "navSettings": "Settings",
+
+  "homeTitle": "Discover",
+  "filterNewest": "Newest",
+  "filterTop": "Top IMDb",
+  "filterByYear": "By Year",
+
+  "retry": "Retry",
+  "errorNetwork": "Couldn't reach the server. Check your connection.",
+  "errorServer": "The server returned an error ({code}).",
+  "@errorServer": {
+    "placeholders": {
+      "code": { "type": "int" }
+    }
+  },
+  "errorUnexpected": "Something went wrong.",
+
+  "homeEmptyTitle": "No movies found",
+  "homeEmptySubtitle": "Try a different filter or check back later.",
+
+  "searchHint": "Search movies…",
+  "searchInitialTitle": "Start exploring",
+  "searchInitialSubtitle": "Search for any movie by its title.",
+  "searchEmptyTitle": "No results",
+  "searchEmptySubtitle": "We couldn't find anything for “{query}”.",
+  "@searchEmptySubtitle": {
+    "placeholders": {
+      "query": { "type": "String" }
+    }
+  },
+  "searchHistory": "Recent searches",
+  "clearHistory": "Clear",
+
+  "favoritesTitle": "Favorites",
+  "favoritesEmptyTitle": "No favorites yet",
+  "favoritesEmptySubtitle": "Tap the heart on any movie to keep it here.",
+
+  "settingsTitle": "Settings",
+  "appearance": "Appearance",
+  "themeMode": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "language": "Language",
+  "langSystem": "System",
+  "langEnglish": "English",
+  "langPersian": "فارسی",
+  "persianNumerals": "Persian numerals",
+  "persianNumeralsDesc": "Show digits in Persian script",
+  "apiSection": "API",
+  "apiKey": "API key",
+  "apiKeyDesc": "Leave empty to use the built-in default key.",
+  "apiKeySaved": "API key updated",
+  "aboutSection": "About",
+  "version": "Version",
+
+  "viewedBadge": "Seen",
+  "markSeen": "Mark as seen",
+  "unmarkSeen": "Mark as unseen",
+  "addedToFavorites": "Added to favorites",
+  "removedFromFavorites": "Removed from favorites",
+
+  "year": "Year",
+  "rating": "Rating",
+  "durationMinutes": "{minutes} min",
+  "@durationMinutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "noDuration": "Unknown",
+
+  "sources": "Download sources",
+  "noDownloadLinks": "No download links available.",
+  "download": "Download",
+  "copyLink": "Copy link",
+  "share": "Share",
+  "copyAll": "Copy all links",
+  "copied": "Copied to clipboard",
+  "openFailed": "Couldn't open the link.",
+
+  "description": "Story",
+  "noDescription": "No story available for this title.",
+  "countries": "Country"
+}
