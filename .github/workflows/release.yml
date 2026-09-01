@@ -87,10 +87,47 @@ jobs:
       - name: Build Linux (release)
         run: flutter build linux --release
 
-      - name: Stage artifact
+      - name: Install fpm
+        run: sudo gem install fpm --no-document
+
+      - name: Package deb and rpm
         run: |
           VERSION="${{ needs.check-version.outputs.version }}"
-          mkdir -p "dist/Filmify-$VERSION-linux-x64"
+          mkdir -p dist
+          STAGE=$(mktemp -d)
+          mkdir -p "$STAGE/opt/filmify" \
+                   "$STAGE/usr/share/applications" \
+                   "$STAGE/usr/share/icons/hicolor/512x512/apps"
+          cp -r build/linux/x64/release/bundle/. "$STAGE/opt/filmify/"
+          cp packaging/linux/filmify.desktop "$STAGE/usr/share/applications/"
+          cp assets/branding/linux/filmify-512.png \
+             "$STAGE/usr/share/icons/hicolor/512x512/apps/filmify.png"
+
+          fpm -s dir -t deb -n filmify -v "$VERSION" -a amd64 \
+            --description "Bilingual movie discovery & download hub" \
+            --url "https://github.com/mst-ghi/filmify" \
+            --maintainer "mst-ghi" \
+            --category video \
+            --depends "libgtk-3-0" \
+            --depends "libstdc++6" \
+            -C "$STAGE" \
+            -p "dist/Filmify-$VERSION-linux-amd64.deb" .
+
+          fpm -s dir -t rpm -n filmify -v "$VERSION" -a x86_64 \
+            --description "Bilingual movie discovery & download hub" \
+            --url "https://github.com/mst-ghi/filmify" \
+            --maintainer "mst-ghi" \
+            --depends "gtk3" \
+            --depends "libstdc++" \
+            -C "$STAGE" \
+            -p "dist/Filmify-$VERSION-linux-x86_64.rpm" .
+
+          rm -rf "$STAGE"
+
+      - name: Stage portable tar.gz
+        run: |
+          VERSION="${{ needs.check-version.outputs.version }}"
+          mkdir -p dist "dist/Filmify-$VERSION-linux-x64"
           cp -r build/linux/x64/release/bundle/. "dist/Filmify-$VERSION-linux-x64/"
           tar -czf "dist/Filmify-$VERSION-linux-x64.tar.gz" -C dist "Filmify-$VERSION-linux-x64"
           rm -rf "dist/Filmify-$VERSION-linux-x64"
@@ -117,16 +154,25 @@ jobs:
       - name: Build Windows (release)
         run: flutter build windows --release
 
-      - name: Stage artifact
+      - name: Build installer (Inno Setup)
+        shell: pwsh
+        run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) {
+            choco install innosetup -y --no-progress
+            $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          }
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          & $iscc "/DAppVersion=${{ needs.check-version.outputs.version }}" "packaging\windows\filmify.iss"
+
+      - name: Stage portable zip
         shell: pwsh
         run: |
           $version = "${{ needs.check-version.outputs.version }}"
-          New-Item -ItemType Directory -Force -Path dist | Out-Null
-          Copy-Item -Recurse -Force build/windows/x64/runner/Release/* "dist/"
-          Compress-Archive -Path dist/* -DestinationPath "Filmify-$version-windows-x64.zip" -Force
-          Remove-Item -Recurse -Force dist
-          New-Item -ItemType Directory -Force -Path dist | Out-Null
-          Move-Item "Filmify-$version-windows-x64.zip" "dist/"
+          New-Item -ItemType Directory -Force -Path stage | Out-Null
+          Copy-Item -Recurse -Force build/windows/x64/runner/Release/* "stage/"
+          Compress-Archive -Path stage/* -DestinationPath "dist/Filmify-$version-windows-x64.zip" -Force
+          Remove-Item -Recurse -Force stage
 
       - uses: actions/upload-artifact@v4
         with:

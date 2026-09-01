@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Filmify
+GenericName=Movie Discovery
+Comment=Bilingual movie discovery & download hub
+Exec=/opt/filmify/filmify
+Icon=filmify
+Terminal=false
+Categories=AudioVideo;Video;
+Keywords=movie;film;download;
+StartupWMClass=filmify
