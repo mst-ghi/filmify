@@ -51,14 +51,19 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK (release)
-        run: flutter build apk --release
+      - name: Build APKs (release, split per ABI)
+        run: flutter build apk --release --split-per-abi
 
-      - name: Stage artifact
+      - name: Stage artifacts
         run: |
+          VERSION="${{ needs.check-version.outputs.version }}"
           mkdir -p dist
-          cp build/app/outputs/flutter-apk/app-release.apk \
-            "dist/Filmify-${{ needs.check-version.outputs.version }}-android.apk"
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk \
+            "dist/Filmify-$VERSION-android-arm64-v8a.apk"
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk \
+            "dist/Filmify-$VERSION-android-armeabi-v7a.apk"
+          cp build/app/outputs/flutter-apk/app-x86_64-release.apk \
+            "dist/Filmify-$VERSION-android-x86_64.apk"
 
       - uses: actions/upload-artifact@v4
         with:
