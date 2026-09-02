@@ -18,12 +18,18 @@ Current release: **v1.1.0**
 
 | Platform | Package | Download |
 | --- | --- | --- |
-| Android | APK | [Filmify-1.1.0-android.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-android.apk) |
+| Android (arm64-v8a) | APK | [Filmify-1.1.0-android-arm64-v8a.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-android-arm64-v8a.apk) |
+| Android (armeabi-v7a) | APK | [Filmify-1.1.0-android-armeabi-v7a.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-android-armeabi-v7a.apk) |
+| Android (x86_64) | APK | [Filmify-1.1.0-android-x86_64.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-android-x86_64.apk) |
 | Linux (Debian / Ubuntu) | deb | [Filmify-1.1.0-linux-amd64.deb](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-linux-amd64.deb) |
 | Linux (Fedora / openSUSE) | rpm | [Filmify-1.1.0-linux-x86_64.rpm](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-linux-x86_64.rpm) |
 | Linux (portable) | tar.gz | [Filmify-1.1.0-linux-x64.tar.gz](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-linux-x64.tar.gz) |
 | Windows (installer) | setup.exe | [Filmify-1.1.0-windows-x64-setup.exe](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-windows-x64-setup.exe) |
 | Windows (portable) | zip | [Filmify-1.1.0-windows-x64.zip](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-windows-x64.zip) |
+
+Android APKs are split per ABI — most phones from the last ~10 years
+(including the Galaxy A55) use **arm64-v8a**; pick **armeabi-v7a** only for
+older 32-bit devices and **x86_64** for emulators.
 
 The deb/rpm packages and the Windows installer register a launcher and handle
 updates by reinstalling; the tar.gz/zip archives are self-contained portable
@@ -63,8 +69,8 @@ git push origin main --tags
 ```
 
 The `Release` workflow verifies the tag matches `pubspec.yaml`, builds all
-three platforms, packages them (apk / deb / rpm / tar.gz / setup.exe / zip)
-and publishes a GitHub release with the artifacts. A mismatch fails the
+three platforms, packages them (split apks / deb / rpm / tar.gz / setup.exe /
+zip) and publishes a GitHub release with the artifacts. A mismatch fails the
 build, keeping versions in sync.
 
 ## API key
@@ -77,7 +83,7 @@ key is sent as a URL path segment, mirroring the upstream API contract.
 ```sh
 flutter pub get
 flutter run            # debug on the connected device
-flutter build apk --release
+flutter build apk --release --split-per-abi
 flutter build linux --release
 flutter build windows --release
 ```
