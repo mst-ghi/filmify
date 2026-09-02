@@ -106,6 +106,25 @@ foreach(bundled_library ${PLUGIN_BUNDLED_LIBRARIES})
     COMPONENT Runtime)
 endforeach(bundled_library)
 
+# Local no-root libmpv for media_kit: bundle the extracted runtime .so files
+# alongside the app (they live outside the system library paths by design).
+set(FILMIFY_MPV_LIB_DIR "$ENV{HOME}/.cache/filmify-mpv/root/usr/lib/x86_64-linux-gnu")
+if(EXISTS "${FILMIFY_MPV_LIB_DIR}/libmpv.so.2")
+  # Also let the linker resolve libmpv's transitive dependencies (lua, sixel,
+  # va-wayland…) from the same local dir at build time.
+  target_link_directories(${BINARY_NAME} PRIVATE "${FILMIFY_MPV_LIB_DIR}")
+  install(DIRECTORY "${FILMIFY_MPV_LIB_DIR}/"
+    DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
+    COMPONENT Runtime
+    FILES_MATCHING
+    PATTERN "libmpv.so.2*"
+    PATTERN "libmujs.so.3*"
+    PATTERN "liblua5.2.so.0*"
+    PATTERN "liblua5.2-c++.so.0*"
+    PATTERN "libsixel.so.1*"
+    PATTERN "libva-wayland.so.2*")
+endif()
+
 # Copy the native assets provided by the build.dart from all packages.
 set(NATIVE_ASSETS_DIR "${PROJECT_BUILD_DIR}native_assets/linux/")
 install(DIRECTORY "${NATIVE_ASSETS_DIR}"

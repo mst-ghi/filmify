@@ -40,14 +40,14 @@ class _GradientBackgroundState extends State<GradientBackground>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final orange = isDark ? AppColors.orangeDim : AppColors.orange;
+    final purple = isDark ? AppColors.purpleDim : AppColors.purple;
     final green = isDark ? AppColors.greenDeep : AppColors.green;
 
     return Stack(
       fit: StackFit.expand,
       children: [
         ColoredBox(
-          color: isDark ? AppColors.darkBackground : const Color(0xFFFDF8F4),
+          color: isDark ? AppColors.darkBackground : const Color(0xFFFAF8FD),
         ),
         AnimatedBuilder(
           animation: _controller,
@@ -55,9 +55,9 @@ class _GradientBackgroundState extends State<GradientBackground>
             final t = _controller.value * 2 * math.pi;
             return CustomPaint(
               painter: _MeshPainter(
-                orange: orange,
+                purple: purple,
                 green: green,
-                orangeOffset: Offset(
+                purpleOffset: Offset(
                   math.cos(t) * 0.18,
                   math.sin(t * 0.8) * 0.14,
                 ),
@@ -82,17 +82,17 @@ class _GradientBackgroundState extends State<GradientBackground>
 
 class _MeshPainter extends CustomPainter {
   _MeshPainter({
-    required this.orange,
+    required this.purple,
     required this.green,
-    required this.orangeOffset,
+    required this.purpleOffset,
     required this.greenOffset,
     required this.accentOffset,
     required this.dark,
   });
 
-  final Color orange;
+  final Color purple;
   final Color green;
-  final Offset orangeOffset;
+  final Offset purpleOffset;
   final Offset greenOffset;
   final Offset accentOffset;
   final bool dark;
@@ -100,11 +100,11 @@ class _MeshPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final base = dark ? 0.16 : 0.13;
-    _blob(canvas, size, orange,
-        Alignment(-0.7, -0.8).within(size) + orangeOffset, base + 0.04);
+    _blob(canvas, size, purple,
+        Alignment(-0.7, -0.8).within(size) + purpleOffset, base + 0.04);
     _blob(canvas, size, green,
         Alignment(0.9, -0.4).within(size) + greenOffset, base);
-    _blob(canvas, size, orange.withValues(alpha: 0.6),
+    _blob(canvas, size, purple.withValues(alpha: 0.6),
         Alignment(0.1, 1.1).within(size) + accentOffset, base);
   }
 
@@ -123,10 +123,10 @@ class _MeshPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_MeshPainter oldDelegate) =>
-      oldDelegate.orangeOffset != orangeOffset ||
+      oldDelegate.purpleOffset != purpleOffset ||
       oldDelegate.greenOffset != greenOffset ||
       oldDelegate.accentOffset != accentOffset ||
-      oldDelegate.orange != orange ||
+      oldDelegate.purple != purple ||
       oldDelegate.green != green ||
       oldDelegate.dark != dark;
 }

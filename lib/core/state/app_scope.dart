@@ -5,7 +5,8 @@ import 'app_settings.dart';
 import 'app_stores.dart';
 
 /// Down-the-tree access to the bootstrapped singletons: settings, stores and
-/// the API client. Written once in `main.dart` above [MaterialApp]'s home.
+/// the API client. Written once in `main.dart` via `MaterialApp.builder`, so
+/// every route — including pushed pages and dialogs — sits below it.
 class AppScope extends InheritedNotifier<AppSettings> {
   const AppScope({
     super.key,

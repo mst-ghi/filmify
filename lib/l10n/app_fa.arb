@@ -49,6 +49,8 @@
   "apiKeySaved": "کلید API به‌روزرسانی شد",
   "aboutSection": "درباره",
   "version": "نسخه",
+  "latestRelease": "آخرین نسخه",
+  "shareApp": "هم‌رسانی لینک برنامه",
 
   "viewedBadge": "دیده‌شده",
   "markSeen": "دیده‌شده علامت بزن",
@@ -69,6 +71,9 @@
   "copyAll": "کپی همه لینک‌ها",
   "copied": "در حافظه کپی شد",
   "openFailed": "باز کردن لینک ممکن نشد.",
+
+  "play": "پخش",
+  "playerFailed": "پخش ممکن نشد. ممکن است لینک در دسترس نباشد.",
 
   "description": "داستان",
   "noDescription": "برای این فیلم داستانی ثبت نشده است.",

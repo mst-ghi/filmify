@@ -7,7 +7,11 @@ plugins {
 android {
     namespace = "com.mstghi.filmify"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    // Optional local override (android/ndk.version, gitignored) for machines
+    // that can't download the Flutter-pinned NDK (e.g. dl.google.com blocked).
+    ndkVersion = rootProject.file("ndk.version").takeIf { it.exists() }
+        ?.readText()?.trim()
+        ?: flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

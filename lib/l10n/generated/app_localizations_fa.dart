@@ -145,6 +145,12 @@ class AppLocalizationsFa extends AppLocalizations {
   String get version => 'نسخه';
 
   @override
+  String get latestRelease => 'آخرین نسخه';
+
+  @override
+  String get shareApp => 'هم‌رسانی لینک برنامه';
+
+  @override
   String get viewedBadge => 'دیده‌شده';
 
   @override
@@ -196,6 +202,12 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get openFailed => 'باز کردن لینک ممکن نشد.';
+
+  @override
+  String get play => 'پخش';
+
+  @override
+  String get playerFailed => 'پخش ممکن نشد. ممکن است لینک در دسترس نباشد.';
 
   @override
   String get description => 'داستان';

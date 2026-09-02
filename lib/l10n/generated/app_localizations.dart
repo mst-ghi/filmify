@@ -356,6 +356,18 @@ abstract class AppLocalizations {
   /// **'Version'**
   String get version;
 
+  /// No description provided for @latestRelease.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest release'**
+  String get latestRelease;
+
+  /// No description provided for @shareApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Share app link'**
+  String get shareApp;
+
   /// No description provided for @viewedBadge.
   ///
   /// In en, this message translates to:
@@ -457,6 +469,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t open the link.'**
   String get openFailed;
+
+  /// No description provided for @play.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get play;
+
+  /// No description provided for @playerFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Playback failed. The link may be unavailable.'**
+  String get playerFailed;
 
   /// No description provided for @description.
   ///

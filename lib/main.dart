@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/db/app_database.dart';
@@ -11,9 +12,12 @@ import 'core/state/search_history_store.dart';
 import 'core/theme/app_theme.dart';
 import 'features/shell/home_shell.dart';
 import 'l10n/generated/app_localizations.dart';
+import 'widgets/common/window_controls.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // libmpv runtime for the video player (media_kit).
+  MediaKit.ensureInitialized();
 
   final prefs = await SharedPreferences.getInstance();
   final db = await openAppDatabase();
@@ -64,12 +68,21 @@ class FilmifyApp extends StatelessWidget {
           locale: settings.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: AppScope(
-            settings: settings,
-            stores: stores,
-            apiClient: apiClient,
-            child: const HomeShell(),
+          // Tracks open dialogs so the frameless window buttons can step
+          // aside while a dialog's own close button owns the corner.
+          navigatorObservers: [DialogVisibilityObserver()],
+          // AppScope must live in the builder, not `home`: pushed routes
+          // (movie details) are siblings of the home route under the
+          // Navigator, so only a builder-level ancestor is visible to them.
+          builder: (context, child) => DesktopWindowChrome(
+            child: AppScope(
+              settings: settings,
+              stores: stores,
+              apiClient: apiClient,
+              child: child ?? const SizedBox.shrink(),
+            ),
           ),
+          home: const HomeShell(),
         );
       },
     );

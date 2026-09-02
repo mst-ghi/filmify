@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/network/movie_api_client.dart';
 import '../../core/state/app_scope.dart';
@@ -17,9 +20,32 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  static const _releaseUrl = 'https://github.com/mst-ghi/filmify/releases/latest';
+
   TextEditingController? _apiKey;
   PackageInfo? _info;
   bool _obscureKey = true;
+
+  void _copyReleaseLink(AppLocalizations l10n) {
+    Clipboard.setData(const ClipboardData(text: _releaseUrl));
+    showAppSnackbar(context, l10n.copied);
+  }
+
+  Future<void> _shareReleaseLink() async {
+    await SharePlus.instance.share(
+      ShareParams(text: _releaseUrl, title: 'Filmify'),
+    );
+  }
+
+  Future<void> _openReleasePage() async {
+    final uri = Uri.tryParse(_releaseUrl);
+    if (uri == null ||
+        !await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      if (mounted) {
+        showAppSnackbar(context, AppLocalizations.of(context).openFailed);
+      }
+    }
+  }
 
   @override
   void didChangeDependencies() {
@@ -185,6 +211,42 @@ class _SettingsPageState extends State<SettingsPage> {
                     leading: Icon(Icons.movie_filter_rounded),
                     title: Text('Filmify'),
                     subtitle: Text('Bilingual movie discovery & download hub'),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.new_releases_rounded),
+                    title: Text(l10n.latestRelease),
+                    subtitle: const Text(
+                      'github.com/mst-ghi/filmify/releases/latest',
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          tooltip: l10n.copyLink,
+                          onPressed: () => _copyReleaseLink(l10n),
+                          icon: const Icon(Icons.copy_rounded, size: 20),
+                        ),
+                        IconButton(
+                          tooltip: l10n.share,
+                          onPressed: _shareReleaseLink,
+                          icon: const Icon(Icons.share_rounded, size: 20),
+                        ),
+                        IconButton(
+                          tooltip: l10n.download,
+                          onPressed: _openReleasePage,
+                          icon: Icon(
+                            Icons.open_in_new_rounded,
+                            size: 20,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.ios_share_rounded),
+                    title: Text(l10n.shareApp),
+                    onTap: _shareReleaseLink,
                   ),
                 ]),
               ],

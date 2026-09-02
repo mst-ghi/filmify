@@ -59,6 +59,8 @@
   "apiKeySaved": "API key updated",
   "aboutSection": "About",
   "version": "Version",
+  "latestRelease": "Latest release",
+  "shareApp": "Share app link",
 
   "viewedBadge": "Seen",
   "markSeen": "Mark as seen",
@@ -84,6 +86,9 @@
   "copyAll": "Copy all links",
   "copied": "Copied to clipboard",
   "openFailed": "Couldn't open the link.",
+
+  "play": "Play",
+  "playerFailed": "Playback failed. The link may be unavailable.",
 
   "description": "Story",
   "noDescription": "No story available for this title.",

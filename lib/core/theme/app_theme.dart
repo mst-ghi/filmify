@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-/// Filmify palette: orange as the primary voice, green as the supporting
+/// Filmify palette: purple as the primary voice, green as the supporting
 /// accent. Both schemes are tuned for Material 3.
 class AppColors {
   AppColors._();
 
-  // Brand ramp (orange).
-  static const orange = Color(0xFFF97316);
-  static const orangeDim = Color(0xFFC2410C);
-  static const orangeBright = Color(0xFFFB923C);
-  static const orangePale = Color(0xFFFFEDD5);
+  // Brand ramp (purple).
+  static const purple = Color(0xFF9333EA);
+  static const purpleDim = Color(0xFF7E22CE);
+  static const purpleBright = Color(0xFFA855F7);
+  static const purplePale = Color(0xFFF3E8FF);
 
   // Brand ramp (green).
   static const green = Color(0xFF22C55E);
@@ -17,19 +17,19 @@ class AppColors {
   static const greenBright = Color(0xFF4ADE80);
   static const greenPale = Color(0xFFDCFCE7);
 
-  // Warm dark surfaces (with a subtle orange cast) for the dark theme.
-  static const darkBackground = Color(0xFF131011);
-  static const darkSurface = Color(0xFF1D181A);
-  static const darkSurfaceHigh = Color(0xFF282124);
+  // Cool dark surfaces (with a subtle purple cast) for the dark theme.
+  static const darkBackground = Color(0xFF110E16);
+  static const darkSurface = Color(0xFF1A1622);
+  static const darkSurfaceHigh = Color(0xFF251F31);
 }
 
-const _lightSeed = AppColors.orangeDim;
-const _darkSeed = AppColors.orange;
+const _lightSeed = AppColors.purpleDim;
+const _darkSeed = AppColors.purple;
 
 ThemeData buildLightTheme() {
   final scheme = ColorScheme.fromSeed(
     seedColor: _lightSeed,
-    primary: AppColors.orange,
+    primary: AppColors.purple,
     secondary: AppColors.greenDeep,
     brightness: Brightness.light,
   );
@@ -39,7 +39,7 @@ ThemeData buildLightTheme() {
 ThemeData buildDarkTheme() {
   final scheme = ColorScheme.fromSeed(
     seedColor: _darkSeed,
-    primary: AppColors.orangeBright,
+    primary: AppColors.purpleBright,
     secondary: AppColors.green,
     brightness: Brightness.dark,
     surface: AppColors.darkSurface,
@@ -51,7 +51,7 @@ ThemeData buildDarkTheme() {
 
 ThemeData _baseTheme(ColorScheme scheme, Brightness brightness) {
   final isDark = brightness == Brightness.dark;
-  final fontColor = isDark ? Colors.white : const Color(0xFF231A15);
+  final fontColor = isDark ? Colors.white : const Color(0xFF1D1726);
 
   TextTheme buildText(TextTheme base) => base
       .apply(bodyColor: fontColor, displayColor: fontColor)
@@ -67,7 +67,7 @@ ThemeData _baseTheme(ColorScheme scheme, Brightness brightness) {
     fontFamily: 'Vazirmatn',
     textTheme: buildText(ThemeData(brightness: brightness).textTheme),
     scaffoldBackgroundColor:
-        isDark ? AppColors.darkBackground : const Color(0xFFFDF8F4),
+        isDark ? AppColors.darkBackground : const Color(0xFFFAF8FD),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
       foregroundColor: fontColor,

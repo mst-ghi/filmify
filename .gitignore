@@ -47,3 +47,5 @@ app.*.map.json
 # Flutter ephemeral build directories
 linux/flutter/ephemeral/
 windows/flutter/ephemeral/
+android/ndk.version
+android/build/

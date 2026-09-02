@@ -4,6 +4,31 @@ Bilingual (English / فارسی) movie discovery & download hub — a Flutter ap
 Android, Linux and Windows. Successor to the `a-movie` project, talking to the
 same upstream movie API.
 
+<p align="center">
+  <img src="docs/screenshots/screenshot-1.jpg" width="49%" alt="Filmify screenshot 1">
+  &nbsp;
+  <img src="docs/screenshots/screenshot-2.jpg" width="49%" alt="Filmify screenshot 2">
+</p>
+
+## Download
+
+Grab the latest build for your platform from the
+[Releases page](https://github.com/mst-ghi/filmify/releases/latest).
+Current release: **v1.1.0**
+
+| Platform | Package | Download |
+| --- | --- | --- |
+| Android | APK | [Filmify-1.1.0-android.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-android.apk) |
+| Linux (Debian / Ubuntu) | deb | [Filmify-1.1.0-linux-amd64.deb](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-linux-amd64.deb) |
+| Linux (Fedora / openSUSE) | rpm | [Filmify-1.1.0-linux-x86_64.rpm](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-linux-x86_64.rpm) |
+| Linux (portable) | tar.gz | [Filmify-1.1.0-linux-x64.tar.gz](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-linux-x64.tar.gz) |
+| Windows (installer) | setup.exe | [Filmify-1.1.0-windows-x64-setup.exe](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-windows-x64-setup.exe) |
+| Windows (portable) | zip | [Filmify-1.1.0-windows-x64.zip](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-windows-x64.zip) |
+
+The deb/rpm packages and the Windows installer register a launcher and handle
+updates by reinstalling; the tar.gz/zip archives are self-contained portable
+builds — just extract and run.
+
 ## Features
 
 - **Home** — newest / top-rated / by-year filters, infinite scroll, shimmer
@@ -11,6 +36,8 @@ same upstream movie API.
 - **Search** — debounced live search with persisted recent-query history.
 - **Details** — cover backdrop, genres, rating/duration/year, description and
   download sources with open-in-download-manager, copy and share actions.
+- **Built-in player** — tap a download source to preview the video in a
+  full-window player (mpv/libmpv under the hood).
 - **Favorites & Viewed** — favorite movies and mark movies whose details
   you've already checked (green badge on cards). Both work offline.
 - **Settings** — dark/light/system theme, English/Persian/system language,
@@ -18,17 +45,10 @@ same upstream movie API.
 - **Bilingual & RTL** — full Persian translation with right-to-left layout.
 - **Micro-interactions** — animated gradient-mesh background, hero poster
   transitions, heart-burst on favorite, animated seen badge.
+- **Native desktop feel** — frameless window with custom controls and
+  draggable title bar on Linux/Windows.
 - **Download-manager friendly** — direct links open via the platform handler,
   so IDM/aria2/xdm/ADM-style managers pick them up.
-
-## Install
-
-Grab the latest build for your platform from
-[Releases](https://github.com/mst-ghi/filmify/releases):
-
-- `Filmify-<version>-android.apk`
-- `Filmify-<version>-linux-x64.tar.gz`
-- `Filmify-<version>-windows-x64.zip`
 
 ## Releases & versioning
 
@@ -43,8 +63,9 @@ git push origin main --tags
 ```
 
 The `Release` workflow verifies the tag matches `pubspec.yaml`, builds all
-three platforms and publishes a GitHub release with the artifacts. A mismatch
-fails the build, keeping versions in sync.
+three platforms, packages them (apk / deb / rpm / tar.gz / setup.exe / zip)
+and publishes a GitHub release with the artifacts. A mismatch fails the
+build, keeping versions in sync.
 
 ## API key
 
@@ -73,7 +94,8 @@ lib/
   features/       one folder per tab + details: shell, home, search,
                   favorites, details, settings, shared controllers
   l10n/           ARB translation sources + generated classes
-  widgets/        shared widgets (gradient background, movie card, skeletons…)
+  widgets/        shared widgets (gradient background, movie card, skeletons,
+                  player modal, window controls…)
 ```
 
 State is intentionally hand-rolled `ChangeNotifier` stores over a sembast

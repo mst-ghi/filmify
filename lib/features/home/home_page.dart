@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
   late final MovieApiClient _api;
   late final ScrollController _scroll = ScrollController();
-  late final PagedMovies _listing;
+  PagedMovies _listing = PagedMovies(filter: MovieApiClient.filters.first);
   bool _started = false;
 
   @override
@@ -64,7 +64,6 @@ class _HomePageState extends State<HomePage>
   Future<void> _switchFilter(String filter) async {
     if (filter == _listing.filter && _listing.movies.isNotEmpty) return;
     setState(() {
-      _started = false;
       _listing = PagedMovies(filter: filter);
     });
     await _listing.reload(api: _api, onChanged: () => setState(() {}));
@@ -147,14 +146,22 @@ class _HomePageState extends State<HomePage>
           sliver: SliverLayoutBuilder(
             builder: (context, constraints) {
               final width = constraints.crossAxisExtent;
-              final columns = width > 1000
-                  ? 6
-                  : width > 720
-                      ? 4
-                      : width > 480
-                          ? 3
-                          : 2;
-              final aspect = width > 480 ? 0.56 : 0.52;
+              // Responsive ladder: 1 column on phones up to 6 on wide
+              // desktops. The single-column tier uses a list-row aspect so
+              // one card doesn't fill the whole screen height.
+              final columns = switch (width) {
+                > 1200 => 6,
+                > 1000 => 5,
+                > 820 => 4,
+                > 640 => 3,
+                > 380 => 2,
+                _ => 1,
+              };
+              final aspect = switch (columns) {
+                1 => 2.8,
+                2 => 0.52,
+                _ => 0.56,
+              };
               return SliverGrid(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: columns,

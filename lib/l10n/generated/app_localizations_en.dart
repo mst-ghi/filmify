@@ -144,6 +144,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get version => 'Version';
 
   @override
+  String get latestRelease => 'Latest release';
+
+  @override
+  String get shareApp => 'Share app link';
+
+  @override
   String get viewedBadge => 'Seen';
 
   @override
@@ -195,6 +201,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openFailed => 'Couldn\'t open the link.';
+
+  @override
+  String get play => 'Play';
+
+  @override
+  String get playerFailed => 'Playback failed. The link may be unavailable.';
 
   @override
   String get description => 'Story';
