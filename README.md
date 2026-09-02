@@ -2,7 +2,8 @@
 
 Bilingual (English / فارسی) movie discovery & download hub — a Flutter app for
 Android, Linux and Windows. Successor to the `a-movie` project, talking to the
-same upstream movie API.
+same upstream movie API. Project internals (architecture, release process,
+build notes) live in the [wiki](https://github.com/mst-ghi/filmify/wiki).
 
 <p align="center">
   <img src="docs/screenshots/screenshot-1.jpg" width="49%" alt="Filmify screenshot 1">
