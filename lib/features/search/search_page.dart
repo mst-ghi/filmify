@@ -80,7 +80,8 @@ class _SearchPageState extends State<SearchPage>
     try {
       final results = await scope.apiClient.search(query);
       if (!mounted) return;
-      setState(() => _results = results);
+      // Only movies that can actually be downloaded.
+      setState(() => _results = results.where((m) => m.hasDownloadSources).toList());
       await scope.stores.searchHistory.add(query);
       if (mounted) setState(() => _history = scope.stores.searchHistory.queries);
     } catch (error) {

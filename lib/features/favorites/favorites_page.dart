@@ -38,6 +38,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
             final movies = _tab == _LibraryTab.favorites
                 ? favorites.items
                 : viewed.items;
+            // Only show movies that still have a downloadable source.
+            final withSources = movies.where((m) => m.hasDownloadSources).toList();
             final emptyTitle = _tab == _LibraryTab.favorites
                 ? l10n.favoritesEmptyTitle
                 : l10n.favoritesEmptyTitle;
@@ -68,7 +70,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   ),
                 ),
                 Expanded(
-                  child: movies.isEmpty
+                  child: withSources.isEmpty
                       ? StatusView(
                           icon: _tab == _LibraryTab.favorites
                               ? Icons.favorite_border_rounded
@@ -77,7 +79,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           subtitle: emptySubtitle,
                         )
                       : MovieGrid(
-                          movies: movies,
+                          movies: withSources,
                           onOpen: (movie) => Navigator.of(context).push(
                             MaterialPageRoute<void>(
                               builder: (_) => MovieDetailsPage(movie: movie),

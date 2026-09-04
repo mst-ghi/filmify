@@ -53,9 +53,11 @@ class PagedMovies {
     onChanged();
     try {
       final page = await api.list(filter: filter, page: _nextPage);
+      // Keep only movies with at least one downloadable source.
+      final withSources = page.where((m) => m.hasDownloadSources);
       // Dedupe: upstream pages occasionally repeat items across pages.
       final known = movies.map((m) => m.id).toSet();
-      movies.addAll(page.where((m) => known.add(m.id)));
+      movies.addAll(withSources.where((m) => known.add(m.id)));
       _nextPage += 1;
       if (page.isEmpty) _exhausted = true;
     } on ApiException catch (error) {
