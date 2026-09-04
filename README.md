@@ -15,18 +15,18 @@ build notes) live in the [wiki](https://github.com/mst-ghi/filmify/wiki).
 
 Grab the latest build for your platform from the
 [Releases page](https://github.com/mst-ghi/filmify/releases/latest).
-Current release: **v1.1.0**
+Current release: **v1.1.1**
 
 | Platform | Package | Download |
 | --- | --- | --- |
-| Android (arm64-v8a) | APK | [Filmify-1.1.0-android-arm64-v8a.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-android-arm64-v8a.apk) |
-| Android (armeabi-v7a) | APK | [Filmify-1.1.0-android-armeabi-v7a.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-android-armeabi-v7a.apk) |
-| Android (x86_64) | APK | [Filmify-1.1.0-android-x86_64.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-android-x86_64.apk) |
-| Linux (Debian / Ubuntu) | deb | [Filmify-1.1.0-linux-amd64.deb](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-linux-amd64.deb) |
-| Linux (Fedora / openSUSE) | rpm | [Filmify-1.1.0-linux-x86_64.rpm](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-linux-x86_64.rpm) |
-| Linux (portable) | tar.gz | [Filmify-1.1.0-linux-x64.tar.gz](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-linux-x64.tar.gz) |
-| Windows (installer) | setup.exe | [Filmify-1.1.0-windows-x64-setup.exe](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-windows-x64-setup.exe) |
-| Windows (portable) | zip | [Filmify-1.1.0-windows-x64.zip](https://github.com/mst-ghi/filmify/releases/download/v1.1.0/Filmify-1.1.0-windows-x64.zip) |
+| Android (arm64-v8a) | APK | [Filmify-1.1.1-android-arm64-v8a.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.1/Filmify-1.1.1-android-arm64-v8a.apk) |
+| Android (armeabi-v7a) | APK | [Filmify-1.1.1-android-armeabi-v7a.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.1/Filmify-1.1.1-android-armeabi-v7a.apk) |
+| Android (x86_64) | APK | [Filmify-1.1.1-android-x86_64.apk](https://github.com/mst-ghi/filmify/releases/download/v1.1.1/Filmify-1.1.1-android-x86_64.apk) |
+| Linux (Debian / Ubuntu) | deb | [Filmify-1.1.1-linux-amd64.deb](https://github.com/mst-ghi/filmify/releases/download/v1.1.1/Filmify-1.1.1-linux-amd64.deb) |
+| Linux (Fedora / openSUSE) | rpm | [Filmify-1.1.1-linux-x86_64.rpm](https://github.com/mst-ghi/filmify/releases/download/v1.1.1/Filmify-1.1.1-linux-x86_64.rpm) |
+| Linux (portable) | tar.gz | [Filmify-1.1.1-linux-x64.tar.gz](https://github.com/mst-ghi/filmify/releases/download/v1.1.1/Filmify-1.1.1-linux-x64.tar.gz) |
+| Windows (installer) | setup.exe | [Filmify-1.1.1-windows-x64-setup.exe](https://github.com/mst-ghi/filmify/releases/download/v1.1.1/Filmify-1.1.1-windows-x64-setup.exe) |
+| Windows (portable) | zip | [Filmify-1.1.1-windows-x64.zip](https://github.com/mst-ghi/filmify/releases/download/v1.1.1/Filmify-1.1.1-windows-x64.zip) |
 
 Android APKs are split per ABI — most phones from the last ~10 years
 (including the Galaxy A55) use **arm64-v8a**; pick **armeabi-v7a** only for
