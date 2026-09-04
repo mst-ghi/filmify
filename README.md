@@ -58,6 +58,9 @@ for the rpm). The tar.gz is portable: extract and run `filmify` from the
 
 ## Features
 
+- **First-run onboarding** — a welcome screen where you pick your language,
+  accent color, theme and a few preferences before diving in. Replay it
+  anytime from **Settings → About → Show welcome again**.
 - **Discover** — newest / top-rated / by-year filters, infinite scroll, shimmer
   skeletons, pull-to-refresh.
 - **Search** — debounced live search with persisted recent-query history.
