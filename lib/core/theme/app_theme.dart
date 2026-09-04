@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Filmify palette: purple as the primary voice, green as the supporting
+/// Filmify brand colors: purple as the primary voice, green as the supporting
 /// accent. Both schemes are tuned for Material 3.
 class AppColors {
   AppColors._();
@@ -17,30 +17,119 @@ class AppColors {
   static const greenBright = Color(0xFF4ADE80);
   static const greenPale = Color(0xFFDCFCE7);
 
-  // Cool dark surfaces (with a subtle purple cast) for the dark theme.
+  // Cool dark surfaces (with a subtle brand cast) for the dark theme.
   static const darkBackground = Color(0xFF110E16);
   static const darkSurface = Color(0xFF1A1622);
   static const darkSurfaceHigh = Color(0xFF251F31);
 }
 
-const _lightSeed = AppColors.purpleDim;
-const _darkSeed = AppColors.purple;
+/// One user-selectable accent palette. [id] is the persisted value (matches
+/// [AppSettings.accentColor]); [label] is the l10n key suffix; [seed] drives
+/// the Material-3 scheme; [primary]/[bright] are the light/dark primaries.
+class AppAccent {
+  const AppAccent({
+    required this.id,
+    required this.seed,
+    required this.primary,
+    required this.bright,
+    this.secondary = AppColors.greenDeep,
+    this.secondaryBright = AppColors.green,
+  });
 
-ThemeData buildLightTheme() {
-  final scheme = ColorScheme.fromSeed(
-    seedColor: _lightSeed,
+  final String id;
+  final Color seed;
+  final Color primary;
+  final Color bright;
+
+  /// Supporting accent — stays green for every palette (the app's brand).
+  final Color secondary;
+  final Color secondaryBright;
+
+  AppAccent copyWith({Color? secondary, Color? secondaryBright}) => AppAccent(
+        id: id,
+        seed: seed,
+        primary: primary,
+        bright: bright,
+        secondary: secondary ?? this.secondary,
+        secondaryBright: secondaryBright ?? this.secondaryBright,
+      );
+}
+
+/// The palettes users can choose from in onboarding and Settings. The green
+/// palette swaps its own accent out for a warm complementary tone so it stays
+/// distinguishable from the brand green.
+const appAccents = <AppAccent>[
+  AppAccent(
+    id: 'purple',
+    seed: AppColors.purpleDim,
     primary: AppColors.purple,
-    secondary: AppColors.greenDeep,
+    bright: AppColors.purpleBright,
+  ),
+  AppAccent(
+    id: 'blue',
+    seed: Color(0xFF2563EB),
+    primary: Color(0xFF2563EB),
+    bright: Color(0xFF60A5FA),
+  ),
+  AppAccent(
+    id: 'green',
+    seed: AppColors.greenDeep,
+    primary: AppColors.greenDeep,
+    bright: AppColors.greenBright,
+    secondary: Color(0xFFD97706),
+    secondaryBright: Color(0xFFF59E0B),
+  ),
+  AppAccent(
+    id: 'orange',
+    seed: Color(0xFFEA580C),
+    primary: Color(0xFFEA580C),
+    bright: Color(0xFFFB923C),
+  ),
+  AppAccent(
+    id: 'rose',
+    seed: Color(0xFFE11D48),
+    primary: Color(0xFFE11D48),
+    bright: Color(0xFFFB7185),
+  ),
+  AppAccent(
+    id: 'teal',
+    seed: Color(0xFF0D9488),
+    primary: Color(0xFF0D9488),
+    bright: Color(0xFF2DD4BF),
+  ),
+];
+
+/// Resolves an accent by its persisted id; unknown ids fall back to purple.
+AppAccent accentById(String id) {
+  for (final accent in appAccents) {
+    if (accent.id == id) return accent;
+  }
+  return appAccents.first;
+}
+
+/// The default (brand) accent, usable as a const default parameter.
+const defaultAccent = AppAccent(
+  id: 'purple',
+  seed: AppColors.purpleDim,
+  primary: AppColors.purple,
+  bright: AppColors.purpleBright,
+);
+
+ThemeData buildLightTheme({AppAccent accent = defaultAccent}) {
+  final scheme = ColorScheme.fromSeed(
+    seedColor: accent.seed,
+    primary: accent.primary,
+    secondary: accent.secondary,
     brightness: Brightness.light,
   );
   return _baseTheme(scheme, Brightness.light);
 }
 
-ThemeData buildDarkTheme() {
+ThemeData buildDarkTheme({AppAccent accent = defaultAccent}) {
   final scheme = ColorScheme.fromSeed(
-    seedColor: _darkSeed,
-    primary: AppColors.purpleBright,
-    secondary: AppColors.green,
+    seedColor: accent.seed,
+    primary: accent.bright,
+    secondary: accent.secondaryBright,
     brightness: Brightness.dark,
     surface: AppColors.darkSurface,
   );

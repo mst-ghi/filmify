@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../core/state/app_scope.dart';
 import '../../core/theme/app_theme.dart';
 
 /// Slowly drifting blurred color blobs — the "gradient mesh" behind every
@@ -40,8 +41,12 @@ class _GradientBackgroundState extends State<GradientBackground>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final purple = isDark ? AppColors.purpleDim : AppColors.purple;
-    final green = isDark ? AppColors.greenDeep : AppColors.green;
+    // Blobs follow the user's accent choice when running inside AppScope.
+    final accent = accentById(
+      AppScope.maybeOf(context)?.settings.accentColor ?? appAccents.first.id,
+    );
+    final primary = isDark ? accent.seed.withValues(alpha: 0.75) : accent.primary;
+    final green = isDark ? accent.secondaryBright : accent.secondary;
 
     return Stack(
       fit: StackFit.expand,
@@ -55,9 +60,9 @@ class _GradientBackgroundState extends State<GradientBackground>
             final t = _controller.value * 2 * math.pi;
             return CustomPaint(
               painter: _MeshPainter(
-                purple: purple,
+                primary: primary,
                 green: green,
-                purpleOffset: Offset(
+                primaryOffset: Offset(
                   math.cos(t) * 0.18,
                   math.sin(t * 0.8) * 0.14,
                 ),
@@ -82,17 +87,17 @@ class _GradientBackgroundState extends State<GradientBackground>
 
 class _MeshPainter extends CustomPainter {
   _MeshPainter({
-    required this.purple,
+    required this.primary,
     required this.green,
-    required this.purpleOffset,
+    required this.primaryOffset,
     required this.greenOffset,
     required this.accentOffset,
     required this.dark,
   });
 
-  final Color purple;
+  final Color primary;
   final Color green;
-  final Offset purpleOffset;
+  final Offset primaryOffset;
   final Offset greenOffset;
   final Offset accentOffset;
   final bool dark;
@@ -100,11 +105,11 @@ class _MeshPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final base = dark ? 0.16 : 0.13;
-    _blob(canvas, size, purple,
-        Alignment(-0.7, -0.8).within(size) + purpleOffset, base + 0.04);
+    _blob(canvas, size, primary,
+        Alignment(-0.7, -0.8).within(size) + primaryOffset, base + 0.04);
     _blob(canvas, size, green,
         Alignment(0.9, -0.4).within(size) + greenOffset, base);
-    _blob(canvas, size, purple.withValues(alpha: 0.6),
+    _blob(canvas, size, primary.withValues(alpha: 0.6),
         Alignment(0.1, 1.1).within(size) + accentOffset, base);
   }
 
@@ -123,10 +128,10 @@ class _MeshPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_MeshPainter oldDelegate) =>
-      oldDelegate.purpleOffset != purpleOffset ||
+      oldDelegate.primaryOffset != primaryOffset ||
       oldDelegate.greenOffset != greenOffset ||
       oldDelegate.accentOffset != accentOffset ||
-      oldDelegate.purple != purple ||
+      oldDelegate.primary != primary ||
       oldDelegate.green != green ||
       oldDelegate.dark != dark;
 }
