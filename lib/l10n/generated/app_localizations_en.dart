@@ -214,6 +214,75 @@ class AppLocalizationsEn extends AppLocalizations {
   String get removedFromFavorites => 'Removed from favorites';
 
   @override
+  String get onbWelcomeTitle => 'Welcome to Filmify';
+
+  @override
+  String get onbWelcomeSubtitle =>
+      'Discover, browse and download movies in English or Persian — all in one beautiful app.';
+
+  @override
+  String get onbGetStarted => 'Get started';
+
+  @override
+  String get onbNext => 'Next';
+
+  @override
+  String get onbBack => 'Back';
+
+  @override
+  String get onbFinish => 'Finish';
+
+  @override
+  String get onbLanguageTitle => 'Choose your language';
+
+  @override
+  String get onbLanguageSubtitle => 'You can change this anytime in Settings.';
+
+  @override
+  String get onbColorTitle => 'Pick your color';
+
+  @override
+  String get onbColorSubtitle => 'Choose the accent that looks best to you.';
+
+  @override
+  String get onbLooksTitle => 'Make it yours';
+
+  @override
+  String get onbLooksSubtitle =>
+      'Tune a few last details — you can always change them later.';
+
+  @override
+  String get accentColor => 'Accent color';
+
+  @override
+  String get accentPurple => 'Purple';
+
+  @override
+  String get accentBlue => 'Blue';
+
+  @override
+  String get accentGreen => 'Green';
+
+  @override
+  String get accentOrange => 'Orange';
+
+  @override
+  String get accentRose => 'Rose';
+
+  @override
+  String get accentTeal => 'Teal';
+
+  @override
+  String get showWelcomeAgain => 'Show welcome again';
+
+  @override
+  String get showWelcomeAgainDesc =>
+      'Play the onboarding screens on next launch';
+
+  @override
+  String get showWelcomeAgainDone => 'Onboarding will show on next launch';
+
+  @override
   String get year => 'Year';
 
   @override

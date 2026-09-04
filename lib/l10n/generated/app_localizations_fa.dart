@@ -215,6 +215,76 @@ class AppLocalizationsFa extends AppLocalizations {
   String get removedFromFavorites => 'از علاقه‌مندی‌ها حذف شد';
 
   @override
+  String get onbWelcomeTitle => 'به فیلمی‌فای خوش آمدید';
+
+  @override
+  String get onbWelcomeSubtitle =>
+      'کشف، جست‌وجو و دانلود فیلم به زبان فارسی یا انگلیسی، در یک برنامه زیبا.';
+
+  @override
+  String get onbGetStarted => 'شروع';
+
+  @override
+  String get onbNext => 'بعدی';
+
+  @override
+  String get onbBack => 'قبلی';
+
+  @override
+  String get onbFinish => 'پایان';
+
+  @override
+  String get onbLanguageTitle => 'زبان خود را انتخاب کنید';
+
+  @override
+  String get onbLanguageSubtitle =>
+      'در هر زمان می‌توانید آن را در تنظیمات تغییر دهید.';
+
+  @override
+  String get onbColorTitle => 'رنگ مورد نظر را انتخاب کنید';
+
+  @override
+  String get onbColorSubtitle =>
+      'رنگی را انتخاب کنید که به سلیقه شما نزدیکتر است.';
+
+  @override
+  String get onbLooksTitle => 'آن را به سلیقه خود سازید';
+
+  @override
+  String get onbLooksSubtitle =>
+      'چند جزئیات آخر را تنظیم کنید — بعدا هم می‌توانید آنها را تغییر دهید.';
+
+  @override
+  String get accentColor => 'رنگ اصلی';
+
+  @override
+  String get accentPurple => 'بنفش';
+
+  @override
+  String get accentBlue => 'آبی';
+
+  @override
+  String get accentGreen => 'سبز';
+
+  @override
+  String get accentOrange => 'نارنجی';
+
+  @override
+  String get accentRose => 'گلی';
+
+  @override
+  String get accentTeal => 'فیروزه‌ای';
+
+  @override
+  String get showWelcomeAgain => 'نمایش دوباره خوش آمدید';
+
+  @override
+  String get showWelcomeAgainDesc => 'نمایش صفحات آشنایی در شروع بعدی برنامه';
+
+  @override
+  String get showWelcomeAgainDone => 'آشنایی در شروع بعدی نمایش داده می‌شود';
+
+  @override
   String get year => 'سال';
 
   @override

@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/state/app_scope.dart';
+import '../../core/theme/app_theme.dart';
 import '../../core/update/update_service.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../widgets/common/gradient_background.dart';
@@ -107,6 +108,48 @@ class _SettingsPageState extends State<SettingsPage> {
                       selected: {settings.themeMode},
                       onSelectionChanged: (selection) =>
                           settings.setThemeMode(selection.first),
+                    ),
+                  ),
+                  // Accent color.
+                  ListTile(
+                    leading: const Icon(Icons.palette_rounded),
+                    title: Text(l10n.accentColor),
+                    subtitle: Text(_accentName(l10n, settings.accentColor)),
+                    trailing: SizedBox(
+                      width: 76,
+                      height: 40,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          for (final accent in appAccents)
+                            InkWell(
+                              onTap: () =>
+                                  settings.setAccentColor(accent.id),
+                              customBorder: const CircleBorder(),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: accent.primary,
+                                    shape: BoxShape.circle,
+                                    border: settings.accentColor == accent.id
+                                        ? Border.all(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            width: 2.5,
+                                          )
+                                        : null,
+                                  ),
+                                  child: const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                   // Language.
@@ -273,6 +316,16 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: Text(l10n.shareApp),
                     onTap: _shareReleaseLink,
                   ),
+                  ListTile(
+                    leading: const Icon(Icons.waving_hand_rounded),
+                    title: Text(l10n.showWelcomeAgain),
+                    subtitle: Text(l10n.showWelcomeAgainDesc),
+                    onTap: () async {
+                      await settings.setOnboardingDone(false);
+                      if (!context.mounted) return;
+                      showAppSnackbar(context, l10n.showWelcomeAgainDone);
+                    },
+                  ),
                 ]),
               ],
             );
@@ -313,3 +366,12 @@ class _Section extends StatelessWidget {
     );
   }
 }
+
+String _accentName(AppLocalizations l10n, String id) => switch (id) {
+      'blue' => l10n.accentBlue,
+      'green' => l10n.accentGreen,
+      'orange' => l10n.accentOrange,
+      'rose' => l10n.accentRose,
+      'teal' => l10n.accentTeal,
+      _ => l10n.accentPurple,
+    };

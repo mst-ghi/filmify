@@ -488,6 +488,138 @@ abstract class AppLocalizations {
   /// **'Removed from favorites'**
   String get removedFromFavorites;
 
+  /// No description provided for @onbWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Filmify'**
+  String get onbWelcomeTitle;
+
+  /// No description provided for @onbWelcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover, browse and download movies in English or Persian — all in one beautiful app.'**
+  String get onbWelcomeSubtitle;
+
+  /// No description provided for @onbGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get onbGetStarted;
+
+  /// No description provided for @onbNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onbNext;
+
+  /// No description provided for @onbBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get onbBack;
+
+  /// No description provided for @onbFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get onbFinish;
+
+  /// No description provided for @onbLanguageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your language'**
+  String get onbLanguageTitle;
+
+  /// No description provided for @onbLanguageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You can change this anytime in Settings.'**
+  String get onbLanguageSubtitle;
+
+  /// No description provided for @onbColorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick your color'**
+  String get onbColorTitle;
+
+  /// No description provided for @onbColorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the accent that looks best to you.'**
+  String get onbColorSubtitle;
+
+  /// No description provided for @onbLooksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Make it yours'**
+  String get onbLooksTitle;
+
+  /// No description provided for @onbLooksSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tune a few last details — you can always change them later.'**
+  String get onbLooksSubtitle;
+
+  /// No description provided for @accentColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Accent color'**
+  String get accentColor;
+
+  /// No description provided for @accentPurple.
+  ///
+  /// In en, this message translates to:
+  /// **'Purple'**
+  String get accentPurple;
+
+  /// No description provided for @accentBlue.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue'**
+  String get accentBlue;
+
+  /// No description provided for @accentGreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Green'**
+  String get accentGreen;
+
+  /// No description provided for @accentOrange.
+  ///
+  /// In en, this message translates to:
+  /// **'Orange'**
+  String get accentOrange;
+
+  /// No description provided for @accentRose.
+  ///
+  /// In en, this message translates to:
+  /// **'Rose'**
+  String get accentRose;
+
+  /// No description provided for @accentTeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Teal'**
+  String get accentTeal;
+
+  /// No description provided for @showWelcomeAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Show welcome again'**
+  String get showWelcomeAgain;
+
+  /// No description provided for @showWelcomeAgainDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Play the onboarding screens on next launch'**
+  String get showWelcomeAgainDesc;
+
+  /// No description provided for @showWelcomeAgainDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Onboarding will show on next launch'**
+  String get showWelcomeAgainDone;
+
   /// No description provided for @year.
   ///
   /// In en, this message translates to:
