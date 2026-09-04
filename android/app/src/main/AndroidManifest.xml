@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The app fetches movies and posters over the network on every tab;
+         the debug/profile manifests declare INTERNET separately, but release
+         builds need it here or every request fails with errno 7. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="Filmify"
         android:name="${applicationName}"
