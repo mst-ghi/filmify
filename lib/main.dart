@@ -10,6 +10,7 @@ import 'core/state/app_stores.dart';
 import 'core/state/movie_library_store.dart';
 import 'core/state/search_history_store.dart';
 import 'core/theme/app_theme.dart';
+import 'core/update/update_service.dart';
 import 'features/shell/home_shell.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'widgets/common/window_controls.dart';
@@ -39,7 +40,16 @@ Future<void> main() async {
     },
   );
 
-  runApp(FilmifyApp(settings: settings, stores: stores, apiClient: apiClient));
+  final update = UpdateService();
+  // Background update check: only when the user left auto-update on.
+  if (settings.autoUpdate) update.checkForUpdate();
+
+  runApp(FilmifyApp(
+    settings: settings,
+    stores: stores,
+    apiClient: apiClient,
+    update: update,
+  ));
 }
 
 class FilmifyApp extends StatelessWidget {
@@ -48,11 +58,13 @@ class FilmifyApp extends StatelessWidget {
     required this.settings,
     required this.stores,
     required this.apiClient,
+    required this.update,
   });
 
   final AppSettings settings;
   final AppStores stores;
   final MovieApiClient apiClient;
+  final UpdateService update;
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +87,12 @@ class FilmifyApp extends StatelessWidget {
           // (movie details) are siblings of the home route under the
           // Navigator, so only a builder-level ancestor is visible to them.
           builder: (context, child) => DesktopWindowChrome(
+            update: update,
             child: AppScope(
               settings: settings,
               stores: stores,
               apiClient: apiClient,
+              update: update,
               child: child ?? const SizedBox.shrink(),
             ),
           ),

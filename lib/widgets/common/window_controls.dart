@@ -4,6 +4,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../core/update/update_service.dart';
+import 'update_button.dart';
+
 /// Native window chrome for the frameless Linux desktop build.
 ///
 /// The GTK runner removes the WM title bar, so the app draws its own
@@ -12,9 +15,14 @@ import 'package:flutter/services.dart';
 /// window move synchronously inside the button-press handler — Wayland
 /// ignores move requests that arrive after the press grab has ended.
 class DesktopWindowChrome extends StatefulWidget {
-  const DesktopWindowChrome({super.key, required this.child});
+  const DesktopWindowChrome({super.key, required this.child, this.update});
 
   final Widget child;
+
+  /// The updater, when provided, adds an update icon next to the window
+  /// buttons (it lives outside AppScope on the desktop because the chrome
+  /// wraps the scope).
+  final UpdateService? update;
 
   static bool get enabled => !kIsWeb && Platform.isLinux;
 
@@ -92,10 +100,21 @@ class _DesktopWindowChromeState extends State<DesktopWindowChrome> {
             valueListenable: windowDialogOpen,
             builder: (context, dialogOpen, _) => dialogOpen
                 ? const SizedBox.shrink()
-                : const PositionedDirectional(
+                : PositionedDirectional(
                     top: 7,
                     end: 10,
-                    child: WindowControlButtons(),
+                    child: widget.update == null
+                        ? const WindowControlButtons()
+                        : Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              UpdateIconButton(
+                                service: widget.update!,
+                              ),
+                              const SizedBox(width: 8),
+                              const WindowControlButtons(),
+                            ],
+                          ),
                   ),
           ),
         ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
+import '../../../widgets/common/update_button.dart';
+import '../../../widgets/common/window_controls.dart';
 import '../favorites/favorites_page.dart';
 import '../home/home_page.dart';
 import '../search/search_page.dart';
@@ -46,6 +48,23 @@ class _HomeShellState extends State<HomeShell> {
 
         final body = IndexedStack(index: _index, children: pages);
 
+        // On Linux the update icon lives in the window chrome; everywhere else
+        // (Android, Windows) overlay it at the top-end of the shell header so
+        // it is visible from every tab.
+        Widget scopedBody = body;
+        if (!DesktopWindowChrome.enabled) {
+          scopedBody = Stack(
+            children: [
+              body,
+              PositionedDirectional(
+                top: MediaQuery.paddingOf(context).top + 8,
+                end: 12,
+                child: const UpdateIconButton(),
+              ),
+            ],
+          );
+        }
+
         if (wide) {
           return Scaffold(
             body: Row(
@@ -64,14 +83,14 @@ class _HomeShellState extends State<HomeShell> {
                       ),
                   ],
                 ),
-                Expanded(child: body),
+                Expanded(child: scopedBody),
               ],
             ),
           );
         }
 
         return Scaffold(
-          body: body,
+          body: scopedBody,
           bottomNavigationBar: NavigationBar(
             selectedIndex: _index,
             onDestinationSelected: (i) => setState(() => _index = i),

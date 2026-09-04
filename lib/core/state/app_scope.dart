@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 
 import '../network/movie_api_client.dart';
+import '../update/update_service.dart';
 import 'app_settings.dart';
 import 'app_stores.dart';
 
-/// Down-the-tree access to the bootstrapped singletons: settings, stores and
-/// the API client. Written once in `main.dart` via `MaterialApp.builder`, so
-/// every route — including pushed pages and dialogs — sits below it.
+/// Down-the-tree access to the bootstrapped singletons: settings, stores, the
+/// API client and the update service. Written once in `main.dart` via
+/// `MaterialApp.builder`, so every route — including pushed pages and dialogs
+/// — sits below it.
 class AppScope extends InheritedNotifier<AppSettings> {
   const AppScope({
     super.key,
     required AppSettings settings,
     required this.stores,
     required this.apiClient,
+    required this.update,
     required super.child,
   }) : super(notifier: settings);
 
   final AppStores stores;
   final MovieApiClient apiClient;
+  final UpdateService update;
 
   /// The settings notifier this scope listens to.
   AppSettings get settings => notifier!;
@@ -34,5 +38,7 @@ class AppScope extends InheritedNotifier<AppSettings> {
 
   @override
   bool updateShouldNotify(AppScope oldWidget) =>
-      stores != oldWidget.stores || apiClient != oldWidget.apiClient;
+      stores != oldWidget.stores ||
+      apiClient != oldWidget.apiClient ||
+      update != oldWidget.update;
 }
