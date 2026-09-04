@@ -47,6 +47,32 @@
   "apiKey": "کلید API",
   "apiKeyDesc": "برای استفاده از کلید پیش‌فرض، خالی بگذارید.",
   "apiKeySaved": "کلید API به‌روزرسانی شد",
+  "updatesSection": "به‌روزرسانی",
+  "autoUpdate": "به‌روزرسانی خودکار",
+  "autoUpdateDesc": "بررسی نسخه جدید هنگام شروع برنامه",
+  "updateStatus": "وضعیت",
+  "updateCheckNow": "بررسی به‌روزرسانی",
+  "updateChecking": "در حال بررسی…",
+  "updateCheckFailed": "بررسی به‌روزرسانی ممکن نشد.",
+  "updateUpToDate": "برنامه به‌روز است",
+  "updateAvailable": "نسخه جدید موجود است",
+  "updateNewVersion": "نسخه جدید {latest} موجود است (نسخه فعلی {current})",
+  "@updateNewVersion": {
+    "placeholders": {
+      "current": { "type": "String" },
+      "latest": { "type": "String" }
+    }
+  },
+  "updateDownload": "دانلود",
+  "updateProgress": "در حال دانلود… {percent}٪",
+  "@updateProgress": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "updateInstall": "نصب",
+  "updateOpenPage": "باز کردن صفحه انتشار",
+  "updateTitle": "به‌روزرسانی",
   "aboutSection": "درباره",
   "version": "نسخه",
   "latestRelease": "آخرین نسخه",

@@ -57,6 +57,32 @@
   "apiKey": "API key",
   "apiKeyDesc": "Leave empty to use the built-in default key.",
   "apiKeySaved": "API key updated",
+  "updatesSection": "Updates",
+  "autoUpdate": "Automatic updates",
+  "autoUpdateDesc": "Check for new versions on startup",
+  "updateStatus": "Status",
+  "updateCheckNow": "Check for updates",
+  "updateChecking": "Checking for updates…",
+  "updateCheckFailed": "Couldn't check for updates.",
+  "updateUpToDate": "You're up to date",
+  "updateAvailable": "New version available",
+  "updateNewVersion": "New version {latest} available (you have {current})",
+  "@updateNewVersion": {
+    "placeholders": {
+      "current": { "type": "String" },
+      "latest": { "type": "String" }
+    }
+  },
+  "updateDownload": "Download",
+  "updateProgress": "Downloading… {percent}%",
+  "@updateProgress": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "updateInstall": "Install",
+  "updateOpenPage": "Open releases page",
+  "updateTitle": "Update",
   "aboutSection": "About",
   "version": "Version",
   "latestRelease": "Latest release",

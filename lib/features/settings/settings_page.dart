@@ -4,14 +4,15 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../core/network/movie_api_client.dart';
 import '../../core/state/app_scope.dart';
+import '../../core/update/update_service.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../widgets/common/gradient_background.dart';
 import '../../widgets/common/movie_card.dart';
+import '../../widgets/common/update_button.dart';
 
-/// Settings tab: appearance (theme mode), language, Persian numerals, API key
-/// override, about (version).
+/// Settings tab: appearance (theme mode), language, Persian numerals, updates,
+/// about (version).
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -22,9 +23,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   static const _releaseUrl = 'https://github.com/mst-ghi/filmify/releases/latest';
 
-  TextEditingController? _apiKey;
   PackageInfo? _info;
-  bool _obscureKey = true;
 
   void _copyReleaseLink(AppLocalizations l10n) {
     Clipboard.setData(const ClipboardData(text: _releaseUrl));
@@ -48,15 +47,6 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // AppScope isn't reachable in initState, so seed the controller here.
-    _apiKey ??= TextEditingController(
-      text: AppScope.of(context).settings.apiKey,
-    );
-  }
-
-  @override
   void initState() {
     super.initState();
     PackageInfo.fromPlatform().then((info) {
@@ -66,7 +56,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void dispose() {
-    _apiKey?.dispose();
     super.dispose();
   }
 
@@ -150,51 +139,87 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ]),
                 const SizedBox(height: 16),
-                _Section(title: l10n.apiSection, children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-                    child: Text(
-                      l10n.apiKeyDesc,
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurfaceVariant,
-                          ),
-                    ),
+                _Section(title: l10n.updatesSection, children: [
+                  SwitchListTile(
+                    secondary: const Icon(Icons.sync_rounded),
+                    title: Text(l10n.autoUpdate),
+                    subtitle: Text(l10n.autoUpdateDesc),
+                    value: settings.autoUpdate,
+                    onChanged: (value) async {
+                      final update = AppScope.of(context).update;
+                      await settings.setAutoUpdate(value);
+                      if (value) update.checkForUpdate();
+                    },
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.key_rounded),
-                    title: Text(l10n.apiKey),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: TextField(
-                        controller: _apiKey!,
-                        obscureText: _obscureKey,
-                        autocorrect: false,
-                        enableSuggestions: false,
-                        decoration: InputDecoration(
-                          suffixIcon: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: Icon(_obscureKey
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined),
-                                onPressed: () =>
-                                    setState(() => _obscureKey = !_obscureKey),
-                              ),
-                            ],
+                  // Update status + manual check.
+                  ListenableBuilder(
+                    listenable: AppScope.of(context).update,
+                    builder: (context, _) {
+                      final update = AppScope.of(context).update;
+                      final state = update.state;
+                      final (IconData icon, String label) = switch (state) {
+                        UpdateStateChecking() => (Icons.hourglass_top_rounded, l10n.updateChecking),
+                        UpdateStateUpToDate() => (
+                            Icons.check_circle_rounded,
+                            l10n.updateUpToDate,
                           ),
-                          hintText: MovieApiClient.defaultApiKey,
-                        ),
-                        onSubmitted: (value) async {
-                          await settings.setApiKey(value);
-                          if (!context.mounted) return;
-                          showAppSnackbar(context, l10n.apiKeySaved);
-                        },
-                      ),
-                    ),
-                    isThreeLine: true,
+                        UpdateStateAvailable() => (
+                            Icons.system_update_alt_rounded,
+                            l10n.updateAvailable,
+                          ),
+                        UpdateStateDownloading() => (
+                            Icons.download_rounded,
+                            l10n.updateProgress((state.downloadProgress! * 100).round()),
+                          ),
+                        UpdateStateDownloaded() => (
+                            Icons.install_desktop_rounded,
+                            l10n.updateInstall,
+                          ),
+                        UpdateStateError() => (Icons.error_outline_rounded, l10n.updateCheckFailed),
+                        _ => (Icons.sync_rounded, l10n.updateCheckNow),
+                      };
+                      Widget trailing = TextButton.icon(
+                        onPressed: () => showUpdateDialog(context, service: update),
+                        icon: const Icon(Icons.system_update_alt_rounded, size: 18),
+                        label: Text(l10n.updateCheckNow),
+                      );
+                      if (state is UpdateStateDownloading) {
+                        trailing = Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.6,
+                              value: state.downloadProgress,
+                            ),
+                          ),
+                        );
+                      } else if (state is UpdateStateDownloaded) {
+                        trailing = FilledButton.tonalIcon(
+                          onPressed: () => update.installUpdate(),
+                          icon: const Icon(Icons.install_desktop_rounded, size: 18),
+                          label: Text(l10n.updateInstall),
+                        );
+                      } else if (state is UpdateStateAvailable) {
+                        trailing = FilledButton.tonalIcon(
+                          onPressed: () => showUpdateDialog(context, service: update),
+                          icon: const Icon(Icons.download_rounded, size: 18),
+                          label: Text(l10n.updateDownload),
+                        );
+                      } else if (state is UpdateStateError) {
+                        trailing = TextButton(
+                          onPressed: () => update.checkForUpdate(),
+                          child: Text(l10n.retry),
+                        );
+                      }
+                      return ListTile(
+                        leading: Icon(icon),
+                        title: Text(l10n.updateStatus),
+                        subtitle: Text('${state.currentVersion ?? ''} → ${state.latestVersion ?? ''}'),
+                        trailing: trailing,
+                      );
+                    },
                   ),
                 ]),
                 const SizedBox(height: 16),

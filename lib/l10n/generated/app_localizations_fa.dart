@@ -139,6 +139,55 @@ class AppLocalizationsFa extends AppLocalizations {
   String get apiKeySaved => 'کلید API به‌روزرسانی شد';
 
   @override
+  String get updatesSection => 'به‌روزرسانی';
+
+  @override
+  String get autoUpdate => 'به‌روزرسانی خودکار';
+
+  @override
+  String get autoUpdateDesc => 'بررسی نسخه جدید هنگام شروع برنامه';
+
+  @override
+  String get updateStatus => 'وضعیت';
+
+  @override
+  String get updateCheckNow => 'بررسی به‌روزرسانی';
+
+  @override
+  String get updateChecking => 'در حال بررسی…';
+
+  @override
+  String get updateCheckFailed => 'بررسی به‌روزرسانی ممکن نشد.';
+
+  @override
+  String get updateUpToDate => 'برنامه به‌روز است';
+
+  @override
+  String get updateAvailable => 'نسخه جدید موجود است';
+
+  @override
+  String updateNewVersion(String current, String latest) {
+    return 'نسخه جدید $latest موجود است (نسخه فعلی $current)';
+  }
+
+  @override
+  String get updateDownload => 'دانلود';
+
+  @override
+  String updateProgress(int percent) {
+    return 'در حال دانلود… $percent٪';
+  }
+
+  @override
+  String get updateInstall => 'نصب';
+
+  @override
+  String get updateOpenPage => 'باز کردن صفحه انتشار';
+
+  @override
+  String get updateTitle => 'به‌روزرسانی';
+
+  @override
   String get aboutSection => 'درباره';
 
   @override

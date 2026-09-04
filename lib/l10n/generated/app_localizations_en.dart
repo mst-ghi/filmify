@@ -138,6 +138,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get apiKeySaved => 'API key updated';
 
   @override
+  String get updatesSection => 'Updates';
+
+  @override
+  String get autoUpdate => 'Automatic updates';
+
+  @override
+  String get autoUpdateDesc => 'Check for new versions on startup';
+
+  @override
+  String get updateStatus => 'Status';
+
+  @override
+  String get updateCheckNow => 'Check for updates';
+
+  @override
+  String get updateChecking => 'Checking for updates…';
+
+  @override
+  String get updateCheckFailed => 'Couldn\'t check for updates.';
+
+  @override
+  String get updateUpToDate => 'You\'re up to date';
+
+  @override
+  String get updateAvailable => 'New version available';
+
+  @override
+  String updateNewVersion(String current, String latest) {
+    return 'New version $latest available (you have $current)';
+  }
+
+  @override
+  String get updateDownload => 'Download';
+
+  @override
+  String updateProgress(int percent) {
+    return 'Downloading… $percent%';
+  }
+
+  @override
+  String get updateInstall => 'Install';
+
+  @override
+  String get updateOpenPage => 'Open releases page';
+
+  @override
+  String get updateTitle => 'Update';
+
+  @override
   String get aboutSection => 'About';
 
   @override
