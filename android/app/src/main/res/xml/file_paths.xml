@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Exposes downloaded update APKs (app-support-dir/updates) to the system
+     installer via the FileProvider declared in AndroidManifest.xml. -->
+<paths>
+    <files-path name="updates" path="updates/" />
+</paths>

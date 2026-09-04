@@ -13,7 +13,10 @@ DefaultDirName={autopf}\Filmify
 DefaultGroupName=Filmify
 DisableProgramGroupPage=yes
 OutputDir=..\..\dist
-OutputBaseFilename=Filmify-{#AppVersion}-windows-x64-setup
+; Version-independent output name — the app's updater and the README links
+; match by suffix, so /releases/latest/download/Filmify-windows-x64-setup.exe
+; always points at the newest release.
+OutputBaseFilename=Filmify-windows-x64-setup
 SetupIconFile=..\..\windows\runner\resources\app_icon.ico
 UninstallDisplayIcon={app}\filmify.exe
 Compression=lzma2

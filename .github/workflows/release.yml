@@ -56,14 +56,16 @@ jobs:
 
       - name: Stage artifacts
         run: |
-          VERSION="${{ needs.check-version.outputs.version }}"
           mkdir -p dist
+          # Stable asset names (version-independent) so
+          # /releases/latest/download/<name> links always hit the newest
+          # release without churn. The in-app updater matches by suffix.
           cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk \
-            "dist/Filmify-$VERSION-android-arm64-v8a.apk"
+            "dist/Filmify-android-arm64-v8a.apk"
           cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk \
-            "dist/Filmify-$VERSION-android-armeabi-v7a.apk"
+            "dist/Filmify-android-armeabi-v7a.apk"
           cp build/app/outputs/flutter-apk/app-x86_64-release.apk \
-            "dist/Filmify-$VERSION-android-x86_64.apk"
+            "dist/Filmify-android-x86_64.apk"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -130,7 +132,7 @@ jobs:
             --depends "libmpv2" \
             --depends "libepoxy0" \
             -C "$STAGE" \
-            -p "dist/Filmify-$VERSION-linux-amd64.deb" .
+            -p "dist/Filmify-linux-amd64.deb" .
 
           fpm -s dir -t rpm -n filmify -v "$VERSION" -a x86_64 \
             --description "Bilingual movie discovery & download hub" \
@@ -141,17 +143,16 @@ jobs:
             --depends "mpv-libs" \
             --depends "epoxy" \
             -C "$STAGE" \
-            -p "dist/Filmify-$VERSION-linux-x86_64.rpm" .
+            -p "dist/Filmify-linux-x86_64.rpm" .
 
           rm -rf "$STAGE"
 
       - name: Stage portable tar.gz
         run: |
-          VERSION="${{ needs.check-version.outputs.version }}"
-          mkdir -p dist "dist/Filmify-$VERSION-linux-x64"
-          cp -r build/linux/x64/release/bundle/. "dist/Filmify-$VERSION-linux-x64/"
-          tar -czf "dist/Filmify-$VERSION-linux-x64.tar.gz" -C dist "Filmify-$VERSION-linux-x64"
-          rm -rf "dist/Filmify-$VERSION-linux-x64"
+          mkdir -p dist "dist/Filmify-linux-x64"
+          cp -r build/linux/x64/release/bundle/. "dist/Filmify-linux-x64/"
+          tar -czf "dist/Filmify-linux-x64.tar.gz" -C dist "Filmify-linux-x64"
+          rm -rf "dist/Filmify-linux-x64"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -184,15 +185,15 @@ jobs:
             $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
           }
           New-Item -ItemType Directory -Force -Path dist | Out-Null
+          # Version-independent output name; the in-app updater matches by suffix.
           & $iscc "/DAppVersion=${{ needs.check-version.outputs.version }}" "packaging\windows\filmify.iss"
 
       - name: Stage portable zip
         shell: pwsh
         run: |
-          $version = "${{ needs.check-version.outputs.version }}"
           New-Item -ItemType Directory -Force -Path stage | Out-Null
           Copy-Item -Recurse -Force build/windows/x64/runner/Release/* "stage/"
-          Compress-Archive -Path stage/* -DestinationPath "dist/Filmify-$version-windows-x64.zip" -Force
+          Compress-Archive -Path stage/* -DestinationPath "dist/Filmify-windows-x64.zip" -Force
           Remove-Item -Recurse -Force stage
 
       - uses: actions/upload-artifact@v4
