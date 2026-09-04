@@ -9,8 +9,9 @@ import 'core/state/app_settings.dart';
 import 'core/state/app_stores.dart';
 import 'core/state/movie_library_store.dart';
 import 'core/state/search_history_store.dart';
-import 'core/theme/app_theme.dart';
+import 'core/theme/app_theme.dart' show accentById, buildDarkTheme, buildLightTheme;
 import 'core/update/update_service.dart';
+import 'features/onboarding/onboarding_page.dart';
 import 'features/shell/home_shell.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'widgets/common/window_controls.dart';
@@ -71,11 +72,12 @@ class FilmifyApp extends StatelessWidget {
     return AnimatedBuilder(
       animation: settings,
       builder: (context, _) {
+        final accent = accentById(settings.accentColor);
         return MaterialApp(
           title: 'Filmify',
           debugShowCheckedModeBanner: false,
-          theme: buildLightTheme(),
-          darkTheme: buildDarkTheme(),
+          theme: buildLightTheme(accent: accent),
+          darkTheme: buildDarkTheme(accent: accent),
           themeMode: settings.themeMode,
           locale: settings.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -96,7 +98,11 @@ class FilmifyApp extends StatelessWidget {
               child: child ?? const SizedBox.shrink(),
             ),
           ),
-          home: const HomeShell(),
+          // First run shows the onboarding flow; afterwards go straight to
+          // the home shell. Toggling the flag rebuilds this via AnimatedBuilder.
+          home: settings.onboardingDone
+              ? const HomeShell()
+              : const OnboardingPage(),
         );
       },
     );
