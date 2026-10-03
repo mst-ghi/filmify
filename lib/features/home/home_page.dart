@@ -146,22 +146,16 @@ class _HomePageState extends State<HomePage>
           sliver: SliverLayoutBuilder(
             builder: (context, constraints) {
               final width = constraints.crossAxisExtent;
-              // Responsive ladder: 1 column on phones up to 6 on wide
-              // desktops. The single-column tier uses a list-row aspect so
-              // one card doesn't fill the whole screen height.
+              // Responsive ladder: 2 columns on phones up to 6 on wide
+              // desktops, matching MovieGrid/GridSkeleton elsewhere.
               final columns = switch (width) {
                 > 1200 => 6,
                 > 1000 => 5,
                 > 820 => 4,
                 > 640 => 3,
-                > 380 => 2,
-                _ => 1,
+                _ => 2,
               };
-              final aspect = switch (columns) {
-                1 => 2.8,
-                2 => 0.52,
-                _ => 0.56,
-              };
+              final aspect = columns > 2 ? 0.56 : 0.52;
               return SliverGrid(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: columns,
